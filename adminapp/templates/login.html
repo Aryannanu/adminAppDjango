@@ -1,0 +1,161 @@
+{% load static %}
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+
+    <style>
+      * {
+    box-sizing: border-box;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  body {
+    height: 100vh;
+    background: #0b0e13;
+  }
+  
+  .container {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+  }
+  
+  /* LEFT PANEL */
+  .login-panel {
+    width: 35%;
+    min-width: 380px;
+    background: #0b0e13;
+    padding: 80px 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .logo {
+    color: #ffffff;
+    font-size: 34px;
+    margin-bottom: 50px;
+    font-weight: 600;
+  }
+  
+  .logo span {
+    color: #6fd6ff;
+  }
+  
+  .field {
+    margin-bottom: 25px;
+  }
+  
+  .field input {
+    width: 100%;
+    padding: 14px 16px;
+    background: #141823;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 14px;
+  }
+  
+  .field input::placeholder {
+    color: #8a8fa3;
+  }
+  
+  button {
+    width: 100%;
+    padding: 14px;
+    background: #8ee8ff;
+    color: #000;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  button:hover {
+    background: #6fd6ff;
+  }
+  
+  /* RIGHT PANEL */
+  .bg-panel {
+    flex: 1;
+    background:
+      radial-gradient(circle at 70% 30%, rgba(255,0,120,0.45), transparent 45%),
+      radial-gradient(circle at 40% 70%, rgba(0,200,255,0.5), transparent 50%),
+      linear-gradient(120deg, #0b0e13 25%, #1a0f2e 50%, #061b2d 75%);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  /* NEON STREAK EFFECTS */
+  .bg-panel::before,
+  .bg-panel::after {
+    content: '';
+    position: absolute;
+    width: 120%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #ff2f6d, transparent);
+    top: 45%;
+    left: -10%;
+    filter: blur(1px);
+  }
+  
+  .bg-panel::after {
+    top: 60%;
+    background: linear-gradient(90deg, transparent, #4fc3ff, transparent);
+  }
+  
+
+    </style>
+  </head>
+  <body>
+    
+    <div class="container">
+
+        <!-- LEFT LOGIN PANEL -->
+        <div class="login-panel">
+          <h1 class="logo">Admin Login<span>#</span></h1>
+      
+          <form action="{% url 'login_view' %}" method="POST">
+            {% csrf_token %}
+
+            <div class="field">
+              <input type="text" name="username" placeholder="username">
+            </div>
+      
+            <div class="field">
+              <input type="password" name="password" placeholder="password">
+            </div>
+
+            {% if error %}
+              <p style="color: red; margin-bottom: 10px;">{{ error }}</p>
+            {% endif %}
+      
+            <button type="submit">Login -></button>
+            <a href="/accounts/google/login/" class="btn btn-danger">
+          Login with Google
+      </a>
+          </form>
+        </div>
+      
+        
+      
+      
+      </div>
+
+  </body>
+</html>
+
+
+

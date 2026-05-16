@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="project_detail">
+
+  {% if project.image %}
+    <img src="{{ project.image.url }}" class="detailimage" style="width:100%; height:425px;">
+  {% endif %}
+
+  <div class="detail_info">
+    <h1>{{ project.name }}</h1>
+
+    <p><strong>Service:</strong> {{ project.service.name }}</p>
+
+    <p>
+      <strong>Assigned To:</strong>
+      {% if project.assigned_to %}
+        {{ project.assigned_to.username }}
+      {% else %}
+        Unassigned
+      {% endif %}
+    </p>
+
+    <p><strong>Status:</strong> {{ project.status }}</p>
+    <p><strong>Created:</strong> {{ project.created_at }}</p>
+
+    <a href="{% url 'projects' %}" class="btn">← Back to Projects</a>
+  </div>
+
+</div>
+
+{% endblock %}

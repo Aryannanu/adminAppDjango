@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="header">
+  <h1>Projects</h1>
+  <p>All available projects</p>
+</div>
+
+<div class="project-flex">
+
+  {% for project in projects %}
+  <a href="{% url 'project_all' project.id %}" class="project-card">
+
+
+    {% if project.image %}
+      <img src="{{ project.image.url }}" alt="{{ project.name }}">
+    {% else %}
+      <div class="no-image">No Image</div>
+    {% endif %}
+
+    <h3>{{ project.name }}</h3>
+
+  </a>
+  {% endfor %}
+                                  
+</div>
+
+{% endblock %}

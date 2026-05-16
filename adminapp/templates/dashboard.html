@@ -1,0 +1,146 @@
+
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="header">
+  <h1>My Dashboard</h1>
+  <p>My services and assigned projects</p>
+</div>
+
+
+<div class="card">
+    <h2>Services</h2>
+  
+      {% if services %}
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Duration</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for service in services %}
+        <tr>
+          <td style="text-align:center;">{{ service.name }}</td>
+          <td style="text-align:center;">₹{{ service.price }}</td>
+          <td style="text-align:center;">{{ service.duration_days }} days</td>
+          <td style="text-align:center;">{{ service.description }}</td>
+          <td style="text-align:center;">{{ service.is_active|yesno:"Active,Inactive" }}</td>
+          <td style="text-align:center;">
+            <a class="btn" href="{% url 'service_edit' service.id %}">Edit</a>
+            <a class="btn" href="{% url 'service_delete' service.id %}"
+               onclick="return confirm('Delete this service?')">
+              Delete
+            </a>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+      <p>No services found</p>
+    {% endif %}
+  
+  </div>
+
+  
+  <div class="card">
+    <h2>Projects</h2>
+  
+    {% if projects %}
+    <table>
+      <thead>
+        <tr>
+          <th>Project</th>
+          <th>Service</th>
+          <th>Assigned To</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for project in projects %}
+        <tr>
+          <td style="text-align:center;">{{ project.name }}</td>
+          <td style="text-align:center;">{{ project.service.name }}</td>
+          <td style="text-align:center;">
+            {% if project.assigned_to %}
+              {{ project.assigned_to.username }}
+            {% else %}
+              Unassigned
+            {% endif %}
+          </td>
+          
+          <td style="text-align:center;">{{ project.status }}</td>
+          <td style="text-align:center;">
+            <a class="btn" href="{% url 'project_edit' project.id %}">Edit</a>
+            <a class="btn" href="{% url 'project_delete' project.id %}"
+               onclick="return confirm('Delete this project?')">
+              Delete
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+      <p>No projects found</p>
+    {% endif %}
+  </div>
+  
+
+<div class="card">
+    <h2>Users</h2>
+  
+    {% if users %}
+    <table>
+      <thead>
+        <tr>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Job</th>
+          <th>Phone</th>
+          <th>Image</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for u in users %}
+        <tr>
+          <td style="text-align:center;">{{ u.username }}</td>
+          <td style="text-align:center;">{{ u.email|default:"—" }}</td>
+          <td style="text-align:center;">{{ u.job_post|default:"—" }}</td>
+          <td style="text-align:center;">{{ u.phone|default:"—" }}</td>
+          <td style="text-align:center;">
+            {% if u.image %}
+              <img src="{{ u.image.url }}" style="width:20px; border-radius:40px;">
+            {% else %}
+              —
+            {% endif %}
+          </td>
+          <td style="text-align:center;">
+            <a class="btn" href="{% url 'user_update' %}">Edit</a>
+            <a class="btn" href="{% url 'user_delete' %}"
+               onclick="return confirm('Delete this project?')">
+              Delete
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+      <p>No users found</p>
+    {% endif %}
+  </div>
+  
+
+
+
+{% endblock %}
+
+
+

@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if messages %}
+    {% for message in messages %}
+        <div style="color:green;">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+
+
+<div class="box">
+    <h2>Give Access</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="form-group">
+      <label>User</label>
+      <select name="user_id" required>
+        <option value="">Unassigned</option>
+        {% for user in users %}
+          <option value="{{ user.id }}">{{ user.username }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+     <div class="form-group">
+      <label>Project</label>
+      <select name="project_id" required>
+        <option value="">Unassigned</option>
+        {% for project in projects %}
+          <option value="{{ project.id }}">{{ project.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+       
+
+     <div class="form-group">
+      <label>
+      <input type="checkbox" name="can_view">
+      Can View
+      </label>
+    </div>
+
+    <div class="form-group">
+      <label>
+      <input type="checkbox" name="can_edit">
+      Can Edit
+      </label>
+    </div>
+
+       
+
+    <div class="form-group">
+      <label>
+      <input type="checkbox" name="can_delete">
+      Can Delete
+      </label>
+    </div>
+
+
+        <button type="submit" class="btn">
+            Save
+        </button>
+
+    </form>
+</div>
+
+{% endblock %}

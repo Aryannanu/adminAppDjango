@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="form-wrapper">
+  <h2>Edit Project</h2>
+
+  <form method="POST">
+    {% csrf_token %}
+
+    <input type="text" name="name" value="{{ project.name }}" required>
+
+    <select name="status">
+      <option value="pending" {% if project.status == 'pending' %}selected{% endif %}>Pending</option>
+      <option value="active" {% if project.status == 'active' %}selected{% endif %}>Active</option>
+      <option value="completed" {% if project.status == 'completed' %}selected{% endif %}>Completed</option>
+    </select>
+
+
+ <div class="form-group">
+      <label>Project Image</label>
+      <input type="file" name="image">
+    </div>
+
+    {% if project.image %}
+      <img src="{{ project.image.url }}" style="width:80px; border-radius:50%; margin-top:10px;">
+    {% endif %}
+
+    <div class="form-group">
+      <label>Assign To</label>
+      <select name="assigned_to">
+        <option value="">Unassigned</option>
+        {% for user in users %}
+          <option value="{{ user.id }}" {% if project.assigned_to and project.assigned_to.id == user.id %}selected{% endif %}>
+            {{ user.username }}
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+
+
+
+
+
+    <button class="btn">Update</button>
+  </form>
+</div>
+
+{% endblock %}

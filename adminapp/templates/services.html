@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="card">
+  <h1>Services</h1>
+  <p>Manage business services here.</p>
+  <a href ="{%url 'service_form'%}" style="text-decoration:none;
+  color:black;
+  border:2px solid black;
+  padding:10px;
+  text-align:center;
+  margin-top: 20px;
+  width: 200px;
+  align-item:center;
+  border-radius:40px;
+  "><b>Assign the Services</b></a>
+</div>
+
+<div class="card">
+    <h2>Services</h2>
+  
+    {% if services %}
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Duration</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for service in services %}
+        <tr>
+          <td style="text-align:center;">{{ service.name }}</td>
+          <td style="text-align:center;">₹{{ service.price }}</td>
+          <td style="text-align:center;">{{ service.duration_days }} days</td>
+          <td style="text-align:center;">{{ service.description }}</td>
+          <td style="text-align:center;">{{ service.is_active|yesno:"Active,Inactive" }}</td>
+          <td style="text-align:center;">
+            <a class="btn" href="{% url 'service_edit' service.id %}">Edit</a>
+            <a class="btn" href="{% url 'service_delete' service.id %}"
+               onclick="return confirm('Delete this service?')">
+              Delete
+            </a>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+      <p>No services found</p>
+    {% endif %}
+  </div>
+
+  
+
+{% endblock %}

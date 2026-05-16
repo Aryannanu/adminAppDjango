@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="header">
+  <h1>Create Project</h1>
+  <p>Assign a project to service and user</p>
+</div>
+
+<div class="form-wrapper">
+
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <div class="form-group">
+      <label>Project Name</label>
+      <input type="text" name="name" placeholder="e.g. CRM Dashboard" required>
+    </div>
+
+    <div class="form-group">
+      <label>Service</label>
+      <select name="service" required>
+        <option value="">Select Service</option>
+        {% for service in services %}
+          <option value="{{ service.id }}">{{ service.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Project Image</label>
+      <input type="file" name="image">
+    </div>
+
+    <div class="form-group">
+      <label>Assign To</label>
+      <select name="assigned_to">
+        <option value="">Unassigned</option>
+        {% for user in users %}
+          <option value="{{ user.id }}">{{ user.username }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Status</label>
+      <select name="status">
+        <option value="pending">Pending</option>
+        <option value="active">Active</option>
+        <option value="completed">Completed</option>
+      </select>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn">Save Project</button>
+    </div>
+
+  </form>
+
+</div>
+
+{% endblock %}

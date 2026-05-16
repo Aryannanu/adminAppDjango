@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="card">
+  <h1>User Management</h1>
+  <p>Create, view, and manage application users.</p>
+
+  <br>
+  <div class="accountss" style="display:flex; flex-direction:column;">
+  <a href="{%url 'user_form'%}" style="
+    padding: 12px;
+    color: #6fd6ff;
+    border: 1px solid black;
+    text-decoration: none;
+    border-radius: 40px;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 14px;
+    width: 160px;">+ Create New User</a>
+  </div>
+<div class="card">
+    <h2>Users</h2>
+  
+    {% if users %}
+    <table>
+      <thead>
+        <tr>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Job</th>
+          <th>Phone</th>
+          <th>Image</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for u in users %}
+        <tr>
+          <td style="text-align:center;">{{ u.username }}</td>
+          <td style="text-align:center;">{{ u.email|default:"—" }}</td>
+          <td style="text-align:center;">{{ u.job_post|default:"—" }}</td>
+          <td style="text-align:center;">{{ u.phone|default:"—" }}</td>
+          <td style="text-align:center;">
+            {% if u.image %}
+              <img src="{{ u.image.url }}" style="width:20px; border-radius:40px;">
+            {% else %}
+              —
+            {% endif %}
+          </td>
+          <td style="text-align:center;">
+            <a class="btn" href="{% url 'user_update' %}">Edit</a>
+            <a class="btn" href="{% url 'user_delete' %}"
+               onclick="return confirm('Delete this project?')">
+              Delete
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+      <p>No users found</p>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}
